@@ -1,0 +1,113 @@
+﻿<!-- 搜索舞伴页面 -->
+<view class="page-container">
+  <!-- 搜索区域 -->
+  <view class="search-section">
+    <view class="search-title">搜索舞伴</view>
+    <view class="search-description">输入对方的数字ID来搜索舞伴</view>
+    
+    <view class="search-input-group">
+      <input 
+        class="search-input" 
+        type="number" 
+        placeholder="请输入数字ID" 
+        value="{{searchId}}"
+        bindinput="onSearchIdInput"
+      />
+      <button 
+        class="search-button" 
+        bindtap="onSearchTap"
+        disabled="{{isSearching}}"
+      >
+        {{isSearching ? '搜索中..' : '搜索'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 搜索结果区域 -->
+  <view class="result-section" wx:if="{{showResult}}">
+    <view class="result-header">
+      <text class="result-title">搜索结果</text>
+      <button class="clear-button" bindtap="onClearResult">清除</button>
+    </view>
+
+    <view class="user-card">
+      <!-- 用户头像 -->
+      <view class="avatar-section">
+        <image 
+          class="avatar" 
+          src="{{searchResult.userInfo.avatar || '/icons/person.png'}}"
+          mode="aspectFill"
+        />
+        <view class="partner-status">
+          <text class="status-text {{searchResult.userInfo.hasPartner ? 'has-partner' : 'no-partner'}}">
+            {{searchResult.userInfo.hasPartner ? '已有舞伴' : '单身'}}
+          </text>
+        </view>
+      </view>
+
+      <!-- 用户信息 -->
+      <view class="info-section">
+        <view class="basic-info">
+          <view class="name">{{searchResult.userInfo.name}}</view>
+          <view class="numeric-id">ID: {{searchResult.userInfo.numericId}}</view>
+        </view>
+
+        <view class="detail-info">
+          <view class="info-item">
+            <text class="label">学校:</text>
+            <text class="value">{{searchResult.userInfo.profile.school}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">专业:</text>
+            <text class="value">{{searchResult.userInfo.profile.major}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">年级:</text>
+            <text class="value">{{searchResult.userInfo.profile.grade}}</text>
+          </view>
+          <view class="info-item">
+            <text class="label">舞蹈经验:</text>
+            <text class="value">{{searchResult.userInfo.profile.experience}}</text>
+          </view>
+        </view>
+
+        <!-- 个性签呢-->
+        <view class="signature" wx:if="{{searchResult.userInfo.signature}}">
+          <text class="signature-label">个性签名：</text>
+          <text class="signature-content">{{searchResult.userInfo.signature}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 邀请区呢-->
+    <view class="invite-section" wx:if="{{searchResult.canInvite}}">
+      <view class="invite-title">发送邀请</view>
+      <textarea 
+        class="invite-message" 
+        placeholder="请输入邀请消息，让对方了解您的诚呢.."
+        value="{{inviteMessage}}"
+        bindinput="onInviteMessageInput"
+        maxlength="100"
+      />
+      <view class="message-tip">{{inviteMessage.length}}/100</view>
+      <button class="invite-button" bindtap="onSendInvitation">
+        发送邀呢      </button>
+    </view>
+
+    <!-- 无法邀请提呢-->
+    <view class="no-invite-tip" wx:if="{{!searchResult.canInvite}}">
+      <text class="tip-text">
+        {{searchResult.userInfo.hasPartner ? '该用户已有舞伴' : '该用户不接受邀请'}}
+      </text>
+    </view>
+  </view>
+
+  <!-- 空状呢-->
+  <view class="empty-state" wx:if="{{!showResult && !isSearching}}">
+    <image class="empty-icon" src="/icons/search.png" mode="aspectFit" />
+    <text class="empty-text">输入数字ID搜索舞伴</text>
+    <text class="empty-hint">您可以通过数字ID快速找到心仪的舞伴</text>
+  </view>
+</view>
+  
+

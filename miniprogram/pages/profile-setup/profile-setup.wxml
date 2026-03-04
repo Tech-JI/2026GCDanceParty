@@ -1,0 +1,12 @@
+<!--pages/profile-setup/profile-setup.wxml-->
+<view class="container">
+  <view class="setup-header">
+    <text class="title">完善个人资料</text>
+    <text class="subtitle">让其他用户更好地了解您</text>
+  </view>
+  
+  <view class="setup-content">
+    <text class="setup-text">您的资料正在完善中...</text>
+    <button class="btn-home" bindtap="goHome">返回首页</button>
+  </view>
+</view>

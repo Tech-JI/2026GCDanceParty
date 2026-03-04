@@ -1,0 +1,169 @@
+﻿<!-- 邀请管理页呢-->
+<view class="page-container">
+  <!-- 标签页导呢-->
+  <view class="tab-nav">
+    <view 
+      class="tab-item {{activeTab === 0 ? 'active' : ''}}"
+      bindtap="onTabClick"
+      data-index="0"
+    >
+      <text class="tab-text">收到的邀请</text>
+      <view class="tab-badge" wx:if="{{pendingReceivedCount > 0}}">
+        {{pendingReceivedCount}}
+      </view>
+    </view>
+    <view 
+      class="tab-item {{activeTab === 1 ? 'active' : ''}}"
+      bindtap="onTabClick"
+      data-index="1"
+    >
+      <text class="tab-text">发送的邀请</text>
+    </view>
+  </view>
+
+  <!-- 收到的邀请列呢-->
+  <view class="content-container" wx:if="{{activeTab === 0}}">
+    <view class="loading" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+    
+    <scroll-view class="invitation-list" scroll-y wx:else>
+      <view class="invitation-item" wx:for="{{receivedInvitations}}" wx:key="invitationId">
+        <view class="invitation-header">
+          <view class="sender-info">
+            <text class="sender-name">{{item.fromName}}</text>
+            <text class="sender-id">ID: {{item.fromNumericId}}</text>
+          </view>
+          <view class="status-badge status-{{item.status}}">
+            {{item.status === 'pending' ? '待回复' : item.status === 'accepted' ? '已接受' : item.status === 'rejected' ? '已拒绝' : '已过期'}}
+          </view>
+        </view>
+        
+        <view class="invitation-content">
+          <view class="message">{{item.message}}</view>
+          <view class="time">发送时间：{{item.sentTime}}</view>
+          <view class="time" wx:if="{{item.replyTime}}">
+            回复时间：{{item.replyTime}}
+          </view>
+          <view class="reply" wx:if="{{item.reply}}">
+            回复：{{item.reply}}
+          </view>
+        </view>
+
+        <view class="invitation-actions" wx:if="{{item.status === 'pending'}}">
+          <button 
+            class="action-btn reject-btn" 
+            bindtap="onShowReplyModal"
+            data-invitation="{{item}}"
+          >
+            拒绝
+          </button>
+          <button 
+            class="action-btn accept-btn" 
+            bindtap="onShowReplyModal"
+            data-invitation="{{item}}"
+          >
+            接受
+          </button>
+        </view>
+      </view>
+
+      <!-- 空状呢-->
+      <view class="empty-state" wx:if="{{receivedInvitations.length === 0}}">
+        <image class="empty-icon" src="/icons/mail.png" mode="aspectFit" />
+        <text class="empty-text">暂无收到的邀请</text>
+        <text class="empty-hint">等待其他用户向您发送舞伴邀请</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 发送的邀请列呢-->
+  <view class="content-container" wx:if="{{activeTab === 1}}">
+    <view class="loading" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+    
+    <scroll-view class="invitation-list" scroll-y wx:else>
+      <view class="invitation-item" wx:for="{{sentInvitations}}" wx:key="invitationId">
+        <view class="invitation-header">
+          <view class="receiver-info">
+            <text class="receiver-name">发送给：{{item.toName}}</text>
+            <text class="receiver-id">ID: {{item.toNumericId}}</text>
+          </view>
+          <view class="status-badge status-{{item.status}}">
+            {{item.status === 'pending' ? '待回复' : item.status === 'accepted' ? '已接受' : item.status === 'rejected' ? '已拒绝' : '已过期'}}
+          </view>
+        </view>
+        
+        <view class="invitation-content">
+          <view class="message">您的消息：{{item.message}}</view>
+          <view class="time">发送时间：{{item.sentTime}}</view>
+          <view class="time" wx:if="{{item.replyTime}}">
+            回复时间：{{item.replyTime}}
+          </view>
+          <view class="reply" wx:if="{{item.reply}}">
+            对方回复：{{item.reply}}
+          </view>
+        </view>
+      </view>
+
+      <!-- 空状呢-->
+      <view class="empty-state" wx:if="{{sentInvitations.length === 0}}">
+        <image class="empty-icon" src="/icons/mail.png" mode="aspectFit" />
+        <text class="empty-text">暂无发送的邀请</text>
+        <text class="empty-hint">去搜索页面寻找心仪的舞伴吧</text>
+        <button class="go-search-btn" bindtap="navigateTo" data-url="/pages/search/search">
+          去搜索舞伴
+        </button>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- 回复模态框 -->
+<view class="modal-overlay" wx:if="{{showReplyModal}}" bindtap="onHideReplyModal">
+  <view class="reply-modal" catchtap="onModalTap">
+    <view class="modal-header">
+      <text class="modal-title">回复邀请</text>
+      <image class="close-btn" src="/icons/refresh.png" bindtap="onHideReplyModal" />
+    </view>
+    
+    <view class="modal-content">
+      <view class="invitation-info">
+        <text class="sender-label">来自:</text>
+        <text class="sender-name">{{currentInvitation.fromName}} (ID: {{currentInvitation.fromNumericId}})</text>
+      </view>
+      
+      <view class="original-message">
+        <text class="message-label">邀请消息：</text>
+        <text class="message-content">{{currentInvitation.message}}</text>
+      </view>
+      
+      <view class="reply-input-section">
+        <text class="reply-label">您的回复:</text>
+        <textarea 
+          class="reply-textarea"
+          placeholder="请输入回复消息..."
+          value="{{replyMessage}}"
+          focus="{{showReplyModal}}"
+          bindinput="onReplyInput"
+          maxlength="100"
+        />
+        <text class="char-count">{{replyMessage.length}}/100</text>
+      </view>
+    </view>
+    
+    <view class="modal-actions">
+      <button class="modal-btn reject-btn" bindtap="onRejectInvitation" loading="{{submittingReply}}" disabled="{{submittingReply}}">
+        拒绝邀请
+      </button>
+      <button class="modal-btn accept-btn" bindtap="onAcceptInvitation" loading="{{submittingReply}}" disabled="{{submittingReply}}">
+        接受邀请
+      </button>
+    </view>
+  </view>
+</view>
+
+
+
+

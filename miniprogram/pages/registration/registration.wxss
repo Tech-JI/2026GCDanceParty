@@ -1,0 +1,441 @@
+/* 会员支付页面样式 */
+.page-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 30rpx;
+}
+
+/* 用户信息区域 */
+.user-info-section {
+  margin-bottom: 30rpx;
+}
+
+.info-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 20rpx;
+}
+
+.user-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 30rpx;
+}
+
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 4rpx solid #fff;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+}
+
+.status-badge {
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+  text-align: center;
+}
+
+.status-unpaid {
+  background: linear-gradient(90deg, #ff9a9e 0%, #fecfef 100%);
+  color: #fff;
+}
+
+.status-processing {
+  background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%);
+  color: #d63031;
+}
+
+.status-activated {
+  background: linear-gradient(90deg, #a8edea 0%, #fed6e3 100%);
+  color: #00b894;
+}
+
+.user-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  font-size: 28rpx;
+  color: #666;
+  min-width: 120rpx;
+}
+
+.value {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 支付状态区域 */
+.payment-status-section {
+  margin-bottom: 30rpx;
+}
+
+.status-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 20rpx;
+}
+
+.status-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20rpx;
+  padding: 40rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.status-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.status-icon {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.status-icon.processing {
+  animation: spin 2s linear infinite;
+}
+
+.status-icon.success {
+  filter: hue-rotate(120deg);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.status-text {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.status-desc {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.4;
+}
+
+.payment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.price-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.price-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.price-amount {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #667eea;
+}
+
+.payment-btn, .check-btn, .activated-btn {
+  width: 100%;
+  height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  border: none;
+}
+
+.payment-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+.check-btn {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  color: #d63031;
+}
+
+.activated-btn {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  color: #00b894;
+}
+
+/* 会员权益区域 */
+.benefits-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.benefits-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24rpx;
+  text-align: center;
+}
+
+.benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 16rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.benefit-icon {
+  font-size: 32rpx;
+  width: 50rpx;
+  text-align: center;
+}
+
+.benefit-text {
+  font-size: 28rpx;
+  color: #333;
+  flex: 1;
+}
+
+/* 支付模态框 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.payment-modal {
+  background: #fff;
+  width: 96%;
+  max-width: 750rpx;
+  max-height: 85vh;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.close-btn {
+  width: 40rpx;
+  height: 40rpx;
+  opacity: 0.6;
+}
+
+.modal-content {
+  padding: 30rpx;
+  overflow-y: scroll;
+  flex: 1;
+}
+
+/* 二维码区域 */
+.qr-section {
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.qr-code {
+  width: 400rpx;
+  height: 400rpx;
+  border: 2rpx solid #f0f0f0;
+  border-radius: 12rpx;
+}
+
+.qr-desc {
+  font-size: 26rpx;
+  color: #666;
+  margin-top: 16rpx;
+  display: block;
+}
+
+/* 订单信息区域 */
+.order-section {
+  background: #f8f9fa;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8rpx 0;
+}
+
+.order-label {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.order-value {
+  font-size: 26rpx;
+  color: #333;
+}
+
+.order-value.price {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #667eea;
+}
+
+/* 支付说明 */
+.payment-notice {
+  background: #e3f2fd;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  border-left: 4rpx solid #2196f3;
+}
+
+.proof-section {
+  background: #f8f9fa;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+}
+
+.proof-title {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.proof-desc {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 16rpx;
+}
+
+.proof-upload-btn {
+  width: 100%;
+  height: 72rpx;
+  border-radius: 36rpx;
+  border: none;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.proof-preview {
+  width: 100%;
+  height: 300rpx;
+  border-radius: 12rpx;
+  border: 2rpx dashed #d9d9d9;
+  background: #fff;
+}
+
+.proof-success {
+  display: block;
+  margin-top: 12rpx;
+  color: #00b894;
+  font-size: 24rpx;
+  text-align: center;
+}
+.notice-text {
+  font-size: 24rpx;
+  color: #1976d2;
+  line-height: 1.5;
+}
+
+/* 模态框操作 */
+.modal-actions {
+  display: flex;
+  gap: 20rpx;
+  padding: 30rpx;
+  border-top: 2rpx solid #f0f0f0;
+}
+
+.cancel-btn, .submit-btn {
+  flex: 1;
+  height: 80rpx;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  border: none;
+}
+
+.cancel-btn {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+/* 加载状态 */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300rpx;
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
