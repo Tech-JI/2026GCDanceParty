@@ -69,6 +69,17 @@
             <input name="editschool" value="{{messageschool}}" placeholder="还未填写" bindinput="inputschool" class="text2"></input>
           </view>
   </view>
+
+  <view class="text" style="margin-top: 20rpx;">
+    <view class="textmyword">我的照片/自拍（选填）：</view>
+    <view class="selfie-wrapper" bindtap="onChooseSelfie">
+      <image class="selfie" src="{{selfieUrl}}" mode="aspectFill" wx:if="{{selfieUrl}}"></image>
+      <view class="selfie-placeholder" wx:if="{{!selfieUrl}}">
+        <view class="plus-icon">+</view>
+        <view>点击上传</view>
+      </view>
+    </view>
+  </view>
   
   <view class="text">
   <view class="graylength" wx:if="{{lovelength<31}}">{{lovelength}}/30</view>

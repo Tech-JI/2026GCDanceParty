@@ -3,29 +3,51 @@
 <text decode="{{true}}">&nbsp;</text>
 
 <image src="{{poster}}" mode="widthFix" class="posterimage"></image>
+
+<view class="tab-wrapper">
+  <view class="tab {{isLoginMode ? 'active' : ''}}" bindtap="switchMode" data-mode="login">登录</view>
+  <view class="tab {{!isLoginMode ? 'active' : ''}}" bindtap="switchMode" data-mode="register">注册</view>
+</view>
+
 <form bindsubmit="btnSub">
   <view data-weui-theme="{{theme}}">
-<!-- <text class="greeting" decode="{{true}}"> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; 欢迎来到Kismet 如愿舞会，第一次登录小程序需要核实您的个人信息，未来将会自动登录哦！</text> -->
-<button class="avatar-wrapper" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar" binderror="onAvatarError">
-    <image class="avatar" src="{{avatarUrl}}" mode="aspectFit"></image>
-    <view class="avatar_submit">轻触上传头像</view>
-  </button> 
-  
-    <view class="row">
-      <view class="text1">昵称：</view>
-        <input type="nickname" class="weui-input" name="nickname" placeholder="请输入昵称"/>
-    </view>
-    <view class="row">
-      <view class="text1">用户名：</view>
-      <input name="userid" class="weui-input" placeholder="请输入姓名"></input>
+    <!-- 注册独有选项 -->
+    <block wx:if="{{!isLoginMode}}">
+      <button class="avatar-wrapper" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar" binderror="onAvatarError">
+        <image class="avatar" src="{{avatarUrl}}" mode="aspectFit"></image>
+        <view class="avatar_submit">轻触上传头像</view>
+      </button> 
+    
+      <view class="row">
+        <view class="text1">真实姓名：</view>
+        <input name="realname" class="weui-input" placeholder="请输入真实姓名"></input>
+      </view>
+      <view class="row">
+        <view class="text1">手机号：</view>
+        <input name="phone" type="number" class="weui-input" placeholder="请输入手机号"></input>
+      </view>
+    </block>
+
+    <!-- 共有部分: 账号，密码 -->
+    <view class="row" style="{{isLoginMode ? 'margin-top: 250rpx;' : ''}}">
+      <view class="text1">{{isLoginMode ? '账号：' : '注册账号：'}}</view>
+      <input name="account" class="weui-input" placeholder="请输入登录账号 (用户名)"></input>
     </view>
     <view class="row">
       <view class="text1">密码：</view>
-      <input name="password" class="weui-input" placeholder="请输入密码（报名时填写的手机号）"></input>
+      <input name="password" password class="weui-input" placeholder="请输入密码"></input>
     </view>
 
-</view>
-  <button type="default" plain form-type="submit" class="button">登录</button>
+    <!-- 注册独有: 确认密码 -->
+    <block wx:if="{{!isLoginMode}}">
+      <view class="row">
+        <view class="text1">确认密码：</view>
+        <input name="confirmPassword" password class="weui-input" placeholder="请再次输入密码"></input>
+      </view>
+    </block>
+
+  </view>
+  <button type="default" plain form-type="submit" class="button">{{isLoginMode ? '登录' : '注册'}}</button>
 </form>
 </view>
 <view wx:if="{{haslog==true}}" class="tips">识别到用户，页面跳转中</view>

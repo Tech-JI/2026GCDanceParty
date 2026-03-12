@@ -125,3 +125,11 @@
   width: 100rpx;
   height: 100rpx;
 }
+.message-selfie {
+  width: 100%;
+  border-radius: 10rpx;
+  margin-bottom: 20rpx;
+}
+.message-text {
+  line-height: 1.5;
+}

@@ -36,6 +36,29 @@ button{
   height:800rpx;
 }
 
+/* 新增tab样式 */
+.tab-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 150rpx;
+  margin-bottom: 20rpx;
+  padding: 0 40rpx;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  font-size: 36rpx;
+  color: #ccc;
+  padding-bottom: 10rpx;
+  border-bottom: 4rpx solid transparent;
+  transition: all 0.3s;
+}
+.tab.active {
+  color: #78161E;
+  font-weight: bold;
+  border-bottom: 4rpx solid #78161E;
+}
+
 .avatar-wrapper {
   padding: 0;
   width: 100px !important;

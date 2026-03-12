@@ -144,4 +144,30 @@
   justify-content: flex-end;
   color:red;
   font-size: 18rpx;
+}.selfie-wrapper {
+  margin: 15rpx 30rpx;
+  width: 250rpx;
+  height: 250rpx;
+  border: 4rpx dashed #78161E;
+  border-radius: 15rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #fff;
+}
+.selfie {
+  width: 100%;
+  height: 100%;
+}
+.selfie-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #78161E;
+  font-size: 24rpx;
+}
+.plus-icon {
+  font-size: 60rpx;
+  margin-bottom: -10rpx;
 }

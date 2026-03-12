@@ -114,8 +114,10 @@
 
 <view>
     <view class="myword">我的个性名片：</view>
-    <view class="message">{{dataobj.message ? dataobj.message : "我还没有留下想说的话"}}</view>
-    
+    <view class="message">
+      <image class="message-selfie" src="{{dataobj.selfieImage}}" mode="widthFix" wx:if="{{dataobj.selfieImage}}"></image>
+      <view class="message-text">{{dataobj.message ? dataobj.message : "我还没有留下想说的话"}}</view>
+    </view>
 </view>
 
 <view class="wrapbutton">

@@ -174,3 +174,11 @@
   border-radius: 12rpx;
   border-style: hidden !important;
 }
+.message-selfie {
+  width: 100%;
+  border-radius: 10rpx;
+  margin-bottom: 20rpx;
+}
+.message-text {
+  line-height: 1.5;
+}
