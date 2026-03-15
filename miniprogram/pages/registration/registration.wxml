@@ -1,5 +1,6 @@
 <!-- 会员支付页面 -->
 <view class="page-container">
+  <image class="bg-img" src="/icons/background_invitation.jpg" mode="aspectFill"></image>
   <!-- 用户信息区域 -->
   <view class="user-info-section">
     <view class="info-title">用户信息</view>
@@ -39,19 +40,19 @@
 
   <!-- 支付状态区域-->
   <view class="payment-status-section">
-    <view class="status-title">会员状态</view>
+    <view class="status-title">报名状态</view>
     
     <!-- 未支付状态-->
     <view class="status-card" wx:if="{{paymentStatus === 'unpaid'}}">
       <view class="status-content">
         <image class="status-icon" src="/icons/fail.png" mode="aspectFit" />
-        <text class="status-text">您还未成为会员</text>
+        <text class="status-text">您还未报名成功</text>
         <text class="status-desc">扫码支付即可激活所有功能</text>
       </view>
       
       <view class="payment-info">
         <view class="price-section">
-          <text class="price-label">会员费用</text>
+          <text class="price-label">报名费用</text>
           <text class="price-amount">¥{{paymentAmount}}</text>
         </view>
         
@@ -84,7 +85,7 @@
     <view class="status-card" wx:if="{{paymentStatus === 'activated'}}">
       <view class="status-content">
         <image class="status-icon success" src="/icons/home.png" mode="aspectFit" />
-        <text class="status-text">会员已激活</text>
+        <text class="status-text">已报名成功</text>
         <text class="status-desc">恭喜！您可以使用所有功能</text>
       </view>
       
@@ -99,7 +100,7 @@
 
   <!-- 会员权益说明 -->
   <view class="benefits-section">
-    <view class="benefits-title">会员权益</view>
+    <view class="benefits-title">报名权益</view>
     <view class="benefits-list">
       <view class="benefit-item">
         <view class="benefit-icon">🎯</view>
@@ -113,10 +114,7 @@
         <view class="benefit-icon">🔐</view>
         <text class="benefit-text">完整的隐私保护设置</text>
       </view>
-      <view class="benefit-item">
-        <view class="benefit-icon">🏆</view>
-        <text class="benefit-text">参与比赛报名功能</text>
-      </view>
+     
     </view>
   </view>
 </view>

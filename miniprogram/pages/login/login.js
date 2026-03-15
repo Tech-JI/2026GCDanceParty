@@ -18,6 +18,7 @@ Page({
     avatar_submit: false,
     debug: 'initial state',
     count: 0,
+    selectedGender: '',
     onstack: false
   },
 
@@ -25,6 +26,13 @@ Page({
     const mode = e.currentTarget.dataset.mode;
     this.setData({
       isLoginMode: mode === 'login'
+    });
+    
+  },
+  chooseGender(e) {
+    const gender = e.currentTarget.dataset.gender;
+    this.setData({
+      selectedGender: gender
     });
   },
 
@@ -78,6 +86,11 @@ Page({
       this.setData({ onstack: false });
       return;
     }
+    if (!this.data.selectedGender) {
+      wx.showToast({ title: '请选择性别', icon: 'none' });
+      this.setData({ onstack: false });
+      return;
+    }
 
     try {
       const openidRes = await wx.cloud.callFunction({ name: 'get_openid' });
@@ -125,7 +138,7 @@ Page({
           numericId: randomNumericId,
           receive: {},
           send: {},
-          gender: '',
+          gender: this.data.selectedGender,
           school: '',
           grade: '',
           canedit: true,
@@ -164,10 +177,11 @@ Page({
           }
         }
       });
+      
 
       wx.showToast({ title: '注册成功！', icon: 'success' });
       const createdUserResult = await db.collection('ActiveUser').doc(addResult._id).get();
-      this.saveLoginState(createdUserResult.data);
+      this.saveLoginState(createdUserResult.data,true);
       
     } catch (err) {
       console.error('注册失败:', err);
@@ -216,7 +230,7 @@ Page({
     }
   },
 
-  saveLoginState(activeUser) {
+  saveLoginState(activeUser, isRegister) {
     const app = getApp();
     const userOpenid = activeUser.wxOpenid || activeUser._openid;
     
@@ -235,6 +249,9 @@ Page({
     if(app) {
       app.globalData.openid = userOpenid;
       app.globalData.userInfo = activeUser;
+    }
+    if (isRegister) {
+      wx.setStorageSync('isJustRegistered', true); 
     }
 
     this.setData({

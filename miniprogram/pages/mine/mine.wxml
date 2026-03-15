@@ -4,8 +4,9 @@
     <image class="loading-gif" src="{{spinnerGif}}" mode="aspectFit" binderror="onImageError"/>
   </view>
 </block>
+<image class="background-image" src="{{backgroundImage}}" mode="aspectFill" binderror="onImageError"></image>
 <block wx:if="{{done==true}}">
-  <image class="background-image" src="{{backgroundImage}}" mode="aspectFill" binderror="onImageError"></image>
+ 
 <view class="all" >
   <button class="buttoninvite" bindtap="toinvitation">邀请函</button>
 <view class="top">
@@ -123,6 +124,15 @@
 <view class="wrapbutton">
   <button plain type="default" class="button" bindtap="edit">启用编辑</button>
   <button plain type="warn" class="button logout-btn" bindtap="logout">退出登录</button>
+</view>
+<view class="popup-mask" wx:if="{{showSuccessPopup}}" bindtap="closePopup">
+  <view class="popup-content" catchtap="preventBubbling">
+    <image src="{{popupImageUrl}}" mode="widthFix" class="success-img"></image>
+    
+    <view class="ticket-name">{{popupUserName}}</view>
+    
+    <view class="close-btn" bindtap="closePopup">×</view>
+  </view>
 </view>
 </view>
 </block>

@@ -1,5 +1,6 @@
 ﻿<!-- 搜索舞伴页面 -->
 <view class="page-container">
+  <image class="bg-img" src="/icons/background_invitation.jpg" mode="aspectFill"></image>
   <!-- 搜索区域 -->
   <view class="search-section">
     <view class="search-title">搜索舞伴</view>

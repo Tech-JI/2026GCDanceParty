@@ -90,7 +90,8 @@ button{
   box-sizing: border-box;
 }
 .text1{
-    flex: 2;
+    width: 150rpx;
+    flex: none;
 }
 .weui-input{
     flex: 6;
@@ -110,4 +111,36 @@ button{
   color:snow !important;
   border-radius: 12rpx;
   border-style:hidden !important;
+}
+/* 性别选择器容器 */
+.gender-group {
+  display: flex;
+  flex-direction: row;        
+  justify-content: flex-start; 
+  gap: 30rpx; /* 两个按钮的间距 */
+  flex: 1;    /* 占据剩余空间 */
+}
+
+/* 默认按钮样式 */
+.gender-btn {
+  padding: 20rpx 40rpx;
+  border: 4rpx solid #ccc;
+  border-radius: 10rpx; /* 胶囊圆角 */
+  font-size: 29rpx;
+  color: gray;
+  transition: all 0.3s ease; /* 增加点击过渡动画 */
+}
+
+/* 选中男生时的样式 (深海蓝) */
+.active-boy {
+  background-color: #142850; 
+  color: white;
+  border-color: #142850;
+}
+
+/* 选中女生时的样式 (印章红) */
+.active-girl {
+  background-color: #B83228; 
+  color: white;
+  border-color: #B83228;
 }

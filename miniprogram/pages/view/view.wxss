@@ -65,29 +65,20 @@
   color:gray;
 }
 .myword{
-  margin:30rpx;
+  margin:50rpx;
 }
 .message{
   border: 5rpx solid #78161E;
   border-radius: 15rpx;
-  margin: 30rpx;
   padding:8rpx;
-  width:665rpx;
+  width: 650rpx;         
+  margin: 0 auto 30rpx;  
+
   min-height: 320rpx;
   height:auto !important;
   font-size: 27rpx;
 }
-.message2{
-  border: 5rpx solid #78161E;
-  border-radius: 15rpx;
-  margin: 30rpx;
-  padding:8rpx;
-  width:665rpx;
-  min-height: 320rpx;
-  height:auto !important;
-  font-size: 27rpx;
-  color:gray;
-}
+
 .button{
   margin:20rpx;
   background-color:#78161E !important;
@@ -103,7 +94,7 @@
   font-size: 18rpx;
 }
 .textbox{
-  width:550rpx;
+  width:100%;
   height:300rpx;
   font-size: 27rpx;
 }
@@ -126,10 +117,43 @@
   height: 100rpx;
 }
 .message-selfie {
-  width: 100%;
+  width: 690rpx;          
+  margin: 0 auto 20rpx;  
   border-radius: 10rpx;
-  margin-bottom: 20rpx;
+  display: block;         
 }
 .message-text {
   line-height: 1.5;
+}
+.message {
+  width: 690rpx;         
+  margin: 0 auto 30rpx;  
+  box-sizing: border-box; 
+  
+  border: 5rpx solid #78161E; 
+  border-radius: 15rpx;
+  padding: 20rpx;         
+  min-height: 320rpx;    
+  height: auto !important; 
+}
+
+.message-selfie {
+  width: 100%;          
+  display: block;       
+  border-radius: 10rpx; 
+  margin-bottom: 20rpx; 
+}
+.message-text {
+  font-size: 28rpx;
+  color: #333; 
+  line-height: 1.5; 
+  word-wrap: break-word; 
+}
+
+
+.message2 {
+  width: 100%;
+  color: gray;        
+  text-align: center;   
+
 }

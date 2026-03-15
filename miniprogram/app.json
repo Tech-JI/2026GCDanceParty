@@ -15,10 +15,10 @@
     "pages/partner/partner"
   ],
   "window": {
-    "backgroundColor": "#060401",
+    "backgroundColor": "#FDF5E6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#78161E",
-    "navigationBarTitleText": "STARLET 百老汇之夜",
+    "navigationBarBackgroundColor": "#006994",
+    "navigationBarTitleText": "Odyssey    永恒号",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {

@@ -19,6 +19,9 @@ Page({
     accept: {},
     invitedone: false,
     acceptdone: false,
+    showSuccessPopup: false,
+    popupImageUrl: '',
+    popupUserName: '',
     // 图片资源URL
     spinnerGif: '/icons/spinner.gif',
     backgroundImage: '/icons/background_mine.jpg'
@@ -195,9 +198,45 @@ Page({
 
   //前往邀请函页面
   toinvitation() {
-    wx.navigateTo({
-      url: "../invitation/invitation"
+    // 1. 获取语言环境
+    const systemInfo = wx.getAppBaseInfo();
+    const lang = systemInfo.language; 
+    
+    // 2. 从本地缓存获取当前用户的性别和真实姓名
+    const localUserInfo = wx.getStorageSync('userInfo') || {}; 
+    const gender = localUserInfo.gender; 
+    const userName = localUserInfo.name || '神秘嘉宾'; // 加个保底，万一没名字显示神秘嘉宾
+    
+    let imgUrl = '';
+    const isChinese = lang.includes('zh'); 
+
+    // 3. 匹配图片 (直接复用你之前的完美路径)
+    if (isChinese) {
+      imgUrl = gender === '男' 
+        ? '/icons/invitation-CM.jpg'  
+        : '/icons/invitation-CF.jpg'; 
+    } else {
+      imgUrl = gender === '男' 
+        ? '/icons/invitation-FM.jpg'  
+        : '/icons/invitation-FF.jpg';
+    }
+
+    // 4. 打开弹窗！
+    this.setData({
+      popupImageUrl: imgUrl,
+      popupUserName: userName, 
+      showSuccessPopup: true
     });
+  },
+
+  closePopup() {
+    this.setData({
+      showSuccessPopup: false
+    });
+  },
+
+  preventBubbling() {
+    // 留空防止事件穿透
   },
   
   // 登出功能

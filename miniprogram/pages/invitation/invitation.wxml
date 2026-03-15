@@ -1,5 +1,10 @@
 ﻿<!-- 邀请管理页呢-->
 <view class="page-container">
+ 
+  <image class="bg-img" src="/icons/background_invitation.jpg" mode="aspectFill"></image>
+  
+ 
+
   <!-- 标签页导呢-->
   <view class="tab-nav">
     <view 

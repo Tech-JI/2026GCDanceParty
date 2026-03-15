@@ -30,8 +30,8 @@
 
     <!-- 共有部分: 账号，密码 -->
     <view class="row" style="{{isLoginMode ? 'margin-top: 250rpx;' : ''}}">
-      <view class="text1">{{isLoginMode ? '账号：' : '注册账号：'}}</view>
-      <input name="account" class="weui-input" placeholder="请输入登录账号 (用户名)"></input>
+      <view class="text1">用户名：</view>
+      <input name="account" class="weui-input" placeholder="{{isLoginMode ? '请输入用户名' : '请输入用户名（将被用于登录！）'}}"></input>
     </view>
     <view class="row">
       <view class="text1">密码：</view>
@@ -44,6 +44,19 @@
         <view class="text1">确认密码：</view>
         <input name="confirmPassword" password class="weui-input" placeholder="请再次输入密码"></input>
       </view>
+      <view class="row" wx:if="{{!isLoginMode}}">
+    <view class="text1">性别：</view>
+    <view class="gender-group">
+      <view 
+        class="gender-btn {{selectedGender === '男' ? 'active-boy' : ''}}" 
+        bindtap="chooseGender" 
+        data-gender="男">男生</view>
+      <view 
+        class="gender-btn {{selectedGender === '女' ? 'active-girl' : ''}}" 
+        bindtap="chooseGender" 
+        data-gender="女">女生</view>
+    </view>
+</view>
     </block>
 
   </view>

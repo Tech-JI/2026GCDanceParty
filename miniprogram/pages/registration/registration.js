@@ -27,7 +27,7 @@ Page({
     currentUser: {},
     loading: true,
     showPaymentModal: false,
-    paymentAmount: 98, // 基础支付金额
+    paymentAmount: 130, // 基础支付金额
     paymentStatus: 'unpaid', // unpaid, processing, paid, activated
     orderNumber: '',
     userRecordId: '',

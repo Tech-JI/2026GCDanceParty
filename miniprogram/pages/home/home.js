@@ -51,8 +51,14 @@ Page({
       { id: 3, name: "Refresh", isActive: false }
     ],
     spinnerGifUrl: '/icons/spinner.gif',
-    backgroundImageUrl: '/icons/background.jpg',
-    cornerImageUrl: '/icons/refresh.png'
+    backgroundImageUrl: '/icons/background_mine.jpg',
+    cornerImageUrl: '/icons/refresh.png',
+    selectedGender: '',
+    onstack: false,
+    // 👇 新增：控制弹窗的变量
+    showSuccessPopup: false,
+    popupImageUrl: '',
+    popupUserName: '',
   },
   
   setLanguage() {
@@ -204,5 +210,61 @@ Page({
       done: false
     });
     this.getData();
+
+    
+    this.getData();
+  },
+
+  
+  onShow: function () {
+    // 每次回到首页，都检查一下是不是刚注册进来的新用户
+    this.checkAndShowRegistrationPopup();
+  },
+
+  checkAndShowRegistrationPopup() {
+    // 检查是不是刚注册进来的
+    const isJustRegistered = wx.getStorageSync('isJustRegistered');
+    
+    if (isJustRegistered) {
+
+      const systemInfo = wx.getAppBaseInfo();
+      const lang = systemInfo.language; 
+      
+      const app = getApp();
+      const gender = app.globalData.userInfo.gender; 
+      const userName = app.globalData.userInfo.name;
+      let imgUrl = '';
+      const isChinese = lang.includes('zh'); 
+      
+   
+      if (isChinese) {
+        imgUrl = gender === '男' 
+          ? '/icons/invitation-CM.webp'  
+          : '/icons/invitation-CF.webp'; 
+      } else {
+        imgUrl = gender === '男' 
+          ? '/icons/invitation-FM.webp'  
+          : '/icons/invitation-FF.webp';
+      }
+
+      this.setData({
+        popupImageUrl: imgUrl,
+        popupUserName: userName,
+        showSuccessPopup: true
+      });
+
+    
+      wx.removeStorageSync('isJustRegistered');
+    }
+  },
+  closePopup() {
+    this.setData({
+      showSuccessPopup: false
+    });
+  },
+
+  // 补上阻止事件冒泡的空函数
+  preventBubbling() {
+    // 留空即可，它的作用仅仅是截断点击事件，不让它传到外层的 closePopup 去
   }
 })

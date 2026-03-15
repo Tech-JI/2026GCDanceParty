@@ -5,6 +5,13 @@
   </view>
 
 </block>
+<view class="popup-mask" wx:if="{{showSuccessPopup}}" bindtap="closePopup">
+  <view class="popup-content" catchtap="preventBubbling">
+    <image src="{{popupImageUrl}}" mode="widthFix" class="success-img"></image>
+    <view class="ticket-name">{{popupUserName}}</view>
+    <view class="close-btn" bindtap="closePopup">×</view>
+  </view>
+</view>
 <block wx:if="{{done==true}}">
   <image class="background-image" src="{{backgroundImageUrl}}" mode="aspectFill"></image>
   <view class="page-container">
