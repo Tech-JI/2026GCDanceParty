@@ -55,7 +55,19 @@
         class="gender-btn {{selectedGender === '女' ? 'active-girl' : ''}}" 
         bindtap="chooseGender" 
         data-gender="女">女生</view>
+   
     </view>
+    
+</view>
+<view class="agreement-box">
+  <checkbox-group bindchange="onAgreeChange">
+    <checkbox value="agreed" checked="{{isAgreed}}" color="#667eea" style="transform:scale(0.7);"/>
+  </checkbox-group>
+  <view class="agreement-text">
+    我已阅读并同意
+    <text class="link" bindtap="goToUserAgreement">《用户服务协议》</text> 和 
+    <text class="link" bindtap="goToPrivacyPolicy">《隐私政策》</text>
+  </view>
 </view>
     </block>
 

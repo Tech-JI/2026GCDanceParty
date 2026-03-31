@@ -239,12 +239,12 @@ Page({
    
       if (isChinese) {
         imgUrl = gender === '男' 
-          ? '/icons/invitation-CM.webp'  
-          : '/icons/invitation-CF.webp'; 
+          ? '/icons/invitation-CM.jpg'  
+          : '/icons/invitation-CF.jpg'; 
       } else {
         imgUrl = gender === '男' 
-          ? '/icons/invitation-FM.webp'  
-          : '/icons/invitation-FF.webp';
+          ? '/icons/invitation-FM.jpg'  
+          : '/icons/invitation-FF.jpg';
       }
 
       this.setData({

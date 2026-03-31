@@ -19,7 +19,8 @@ Page({
     debug: 'initial state',
     count: 0,
     selectedGender: '',
-    onstack: false
+    onstack: false,
+    isAgree:false //管理是否同意隐私协议
   },
 
   switchMode(e) {
@@ -37,6 +38,14 @@ Page({
   },
 
   async btnSub(e) {
+    if (!this.data.isAgreed) {
+      wx.showToast({ 
+        title: '请先阅读并勾选下方的《用户协议》与《隐私政策》', 
+        icon: 'none',
+        duration: 2000
+      });
+      return; 
+    }
     if (this.data.count !== 0 || this.data.onstack === true) {
       return;
     }
@@ -284,6 +293,27 @@ Page({
     wx.showToast({
       title: '头像选择失败',
       icon: 'none'
+    });
+  },
+  onAgreeChange(e) {
+    // 微信的 checkbox 选中时会把 value 放到数组里传过来
+    const checked = e.detail.value.length > 0; 
+    this.setData({
+      isAgreed: checked
+    });
+  },
+
+  // 跳转到《用户服务协议》页面
+  goToUserAgreement() {
+    wx.navigateTo({
+      url: '/pages/agreement/agreement' 
+    });
+  },
+
+  // 跳转到《隐私政策》页面
+  goToPrivacyPolicy() {
+    wx.navigateTo({
+      url: '/pages/privacy/privacy' 
     });
   },
 

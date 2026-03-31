@@ -1,0 +1,19 @@
+<!--pages/agreement/agreement.wxml-->
+
+<view class="container">
+  <view class="title">用户服务协议</view>
+  
+  <view class="paragraph">欢迎您使用本小程序！在您使用本服务前，请仔细阅读以下条款。使用本小程序即代表您同意本协议。</view>
+  
+  <view class="subtitle">1. 服务说明</view>
+  <view class="paragraph">本小程序主要为上海交通大学浦江国际学院的春季舞会的舞伴邀请等相关服务而设计。用户可通过平台填写个人资料、寻找匹配对象并发送邀请。</view>
+
+  <view class="subtitle">2. 用户行为规范</view>
+  <view class="paragraph">用户必须保证提供的信息（包括但不限于姓名、学校、手机号等）真实、准确、有效。用户不得利用本平台发布任何违法、违规、淫秽或侵犯他人合法权益的内容。</view>
+
+  <view class="subtitle">3. 账号安全</view>
+  <view class="paragraph">用户应妥善保管自己的账号和密码。因用户个人原因导致的账号泄露或损失，由用户自行承担责任。</view>
+
+  <view class="subtitle">4. 违约处理</view>
+  <view class="paragraph">如发现用户存在违反本协议的行为，平台有权视情节轻重采取警告、限制功能、封停账号等措施，并保留追究法律责任的权利。</view>
+</view>

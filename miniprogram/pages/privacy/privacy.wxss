@@ -1,0 +1,27 @@
+/* pages/privacy/privacy.wxss */
+.container {
+  padding: 40rpx;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40rpx;
+  color: #333;
+}
+.paragraph {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 30rpx;
+  text-align: justify;
+}
+.subtitle {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-top: 40rpx;
+  margin-bottom: 20rpx;
+}

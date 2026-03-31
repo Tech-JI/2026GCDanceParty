@@ -12,7 +12,9 @@
     "pages/view/view",
     "pages/check/check",
     "pages/respond/respond",
-    "pages/partner/partner"
+    "pages/partner/partner",
+    "pages/agreement/agreement", 
+    "pages/privacy/privacy"
   ],
   "window": {
     "backgroundColor": "#FDF5E6",

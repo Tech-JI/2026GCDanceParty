@@ -90,7 +90,7 @@ button{
   box-sizing: border-box;
 }
 .text1{
-    width: 150rpx;
+    width: 170rpx;
     flex: none;
 }
 .weui-input{
@@ -126,7 +126,7 @@ button{
   padding: 20rpx 40rpx;
   border: 4rpx solid #ccc;
   border-radius: 10rpx; /* 胶囊圆角 */
-  font-size: 29rpx;
+  font-size: 32rpx;
   color: gray;
   transition: all 0.3s ease; /* 增加点击过渡动画 */
 }
@@ -144,3 +144,12 @@ button{
   color: white;
   border-color: #B83228;
 }
+.agreement-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30rpx;
+  font-size: 24rpx;
+}
+.agreement-text { color: #666; }
+.link { color: #1976d2; }
