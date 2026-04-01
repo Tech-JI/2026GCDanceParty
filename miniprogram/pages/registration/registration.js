@@ -207,13 +207,7 @@ Page({
 
   // 提交支付信息
   onSubmitPayment() {
-    if (!this.data.puqProofFileId) {
-      wx.showToast({
-        title: '请先上传PUQ截图',
-        icon: 'none'
-      });
-      return;
-    }
+    
 
     if (this.data.uploadingProof) {
       wx.showToast({

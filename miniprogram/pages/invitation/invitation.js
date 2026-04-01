@@ -377,5 +377,17 @@ Page({
       title: '邀请管理',
       path: '/pages/invitation/invitation'
     };
+  },
+  navigateTo(e) {
+    const url = e.currentTarget.dataset.url; 
+    
+    if (url) {
+      wx.navigateTo({
+        url: url,
+        fail: (err) => {
+          console.error('跳转失败:', err);
+        }
+      });
+    }
   }
 });

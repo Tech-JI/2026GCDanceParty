@@ -308,6 +308,7 @@
 }
 
 .qr-code {
+  margin-left:-55rpx;
   width: 400rpx;
   height: 400rpx;
   border: 2rpx solid #f0f0f0;

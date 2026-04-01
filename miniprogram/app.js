@@ -1,5 +1,30 @@
 // app.js
 var openid
+const originalPage = Page;
+
+Page = function(pageConfig) {
+  // 1. 全局开启“发送给朋友”
+  if (!pageConfig.onShareAppMessage) {
+    pageConfig.onShareAppMessage = function() {
+      return {
+        title: '永恒号舞会配对程序', // 你的全局默认标题
+        path: '/pages/home/home', // 全局默认兜底路径（建议写首页）
+        imageUrl: '' // 可选：全局默认的分享图片路径
+      };
+    };
+  }
+
+  
+  if (!pageConfig.onShareTimeline) {
+    pageConfig.onShareTimeline = function() {
+      return {
+        title: '永恒号舞会配对程序',
+        query: '' // 朋友圈点进来携带的参数
+      };
+    };
+  }
+  originalPage(pageConfig);
+};
 App({
   globalData: {
     language: "zh", // 默认语言

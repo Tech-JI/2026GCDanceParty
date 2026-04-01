@@ -31,7 +31,7 @@ exports.main = async (event, context) => {
     }
 
     const currentUser = currentUserResult.data;
-
+    
     if (currentUser.wxOpenid && currentUser.wxOpenid !== wxContext.OPENID) {
       return {
         success: false,
@@ -91,7 +91,13 @@ exports.main = async (event, context) => {
         message: '对方已经有舞伴了'
       };
     }
-    
+    if (currentUser.numericId === targetNumericId) {
+      return {
+        success: false,
+        message: '不能向自己发送邀请'
+      };
+    }
+
     if (!targetUser.privacy || targetUser.privacy.allowInvitation === false) {
       return {
         success: false,

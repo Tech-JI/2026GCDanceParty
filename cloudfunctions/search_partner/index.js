@@ -1,4 +1,4 @@
-// 云函数：搜索舞伴
+// 云函数：搜索舞伴 <--本云函数因为前后不同届接续开发原因 出现了功能接口的差错 殷须后人修改--2026——>
 const cloud = require('wx-server-sdk')
 
 cloud.init({
@@ -98,8 +98,8 @@ exports.main = async (event, context) => {
       userInfo.profile.experience = '隐藏';
     }
     
-    if (targetUser.privacy.showAvatar && targetUser.avatar) {
-      userInfo.avatar = targetUser.avatar;
+    if (targetUser.image) {
+      userInfo.image = targetUser.image;
     }
     
     if (targetUser.privacy.showSignature && targetUser.signature) {

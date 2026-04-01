@@ -209,7 +209,7 @@ Page({
       wx.hideLoading();
       console.error('发送邀请错误:', error);
       wx.showToast({
-        title: '发送failed，请重试',
+        title: '发送失败，请重试',
         icon: 'none'
       });
     }

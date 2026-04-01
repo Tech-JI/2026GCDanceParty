@@ -59,7 +59,9 @@
     </view>
     
 </view>
-<view class="agreement-box">
+
+    </block>
+    <view class="agreement-box">
   <checkbox-group bindchange="onAgreeChange">
     <checkbox value="agreed" checked="{{isAgreed}}" color="#667eea" style="transform:scale(0.7);"/>
   </checkbox-group>
@@ -69,7 +71,6 @@
     <text class="link" bindtap="goToPrivacyPolicy">《隐私政策》</text>
   </view>
 </view>
-    </block>
 
   </view>
   <button type="default" plain form-type="submit" class="button">{{isLoginMode ? '登录' : '注册'}}</button>

@@ -61,7 +61,7 @@
 
 .search-button {
   height: 80rpx;
-  padding: 0 40rpx;
+  padding: 15rpx 40rpx;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #fff;
   border-radius: 12rpx;
@@ -133,6 +133,7 @@
 }
 
 .status-text {
+  line-height: 0.6;
   padding: 8rpx 20rpx;
   border-radius: 20rpx;
   font-size: 24rpx;

@@ -36,12 +36,12 @@
       <view class="avatar-section">
         <image 
           class="avatar" 
-          src="{{searchResult.userInfo.avatar || '/icons/person.png'}}"
+          src="{{searchResult.userInfo.image || '/icons/person.png'}}"
           mode="aspectFill"
         />
         <view class="partner-status">
           <text class="status-text {{searchResult.userInfo.hasPartner ? 'has-partner' : 'no-partner'}}">
-            {{searchResult.userInfo.hasPartner ? '已有舞伴' : '单身'}}
+            {{searchResult.userInfo.hasPartner ? '已有舞伴' : '无舞伴'}}
           </text>
         </view>
       </view>
@@ -52,31 +52,9 @@
           <view class="name">{{searchResult.userInfo.name}}</view>
           <view class="numeric-id">ID: {{searchResult.userInfo.numericId}}</view>
         </view>
+        <!-- 此处曾经有过搜索对象的详细信息 因紧急维修弃用 详情查看云函数-->
+        
 
-        <view class="detail-info">
-          <view class="info-item">
-            <text class="label">学校:</text>
-            <text class="value">{{searchResult.userInfo.profile.school}}</text>
-          </view>
-          <view class="info-item">
-            <text class="label">专业:</text>
-            <text class="value">{{searchResult.userInfo.profile.major}}</text>
-          </view>
-          <view class="info-item">
-            <text class="label">年级:</text>
-            <text class="value">{{searchResult.userInfo.profile.grade}}</text>
-          </view>
-          <view class="info-item">
-            <text class="label">舞蹈经验:</text>
-            <text class="value">{{searchResult.userInfo.profile.experience}}</text>
-          </view>
-        </view>
-
-        <!-- 个性签呢-->
-        <view class="signature" wx:if="{{searchResult.userInfo.signature}}">
-          <text class="signature-label">个性签名：</text>
-          <text class="signature-content">{{searchResult.userInfo.signature}}</text>
-        </view>
       </view>
     </view>
 
@@ -85,14 +63,14 @@
       <view class="invite-title">发送邀请</view>
       <textarea 
         class="invite-message" 
-        placeholder="请输入邀请消息，让对方了解您的诚呢.."
+        placeholder="请输入邀请消息，让对方了解您"
         value="{{inviteMessage}}"
         bindinput="onInviteMessageInput"
         maxlength="100"
       />
       <view class="message-tip">{{inviteMessage.length}}/100</view>
       <button class="invite-button" bindtap="onSendInvitation">
-        发送邀呢      </button>
+        发送邀请      </button>
     </view>
 
     <!-- 无法邀请提呢-->
