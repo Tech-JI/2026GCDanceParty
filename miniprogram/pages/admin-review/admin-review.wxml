@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="title">管理员匹配计划</view>
+  <view class="desc">设置每日自动匹配开始时间。系统会在该时间点自动执行随机匹配。</view>
+
+  <view class="setting-row">
+    <view class="label">自动匹配</view>
+    <switch checked="{{scheduleEnabled}}" bindchange="onEnableChange" color="#78161E" />
+  </view>
+
+  <view class="setting-row">
+    <view class="label">开始时间</view>
+    <picker mode="time" value="{{timeValue}}" bindchange="onTimeChange">
+      <view class="time-value">{{timeValue}}</view>
+    </picker>
+  </view>
+
+  <button class="save-btn" type="primary" bindtap="saveSchedule" loading="{{saving}}" disabled="{{saving}}">
+    {{saving ? '保存中...' : '保存计划'}}
+  </button>
+
+  <view class="result" wx:if="{{lastMessage}}">
+    <view>{{lastMessage}}</view>
+  </view>
+</view>

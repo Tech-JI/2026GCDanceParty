@@ -1,0 +1,12 @@
+{
+  "name": "schedule_random_match",
+  "version": "1.0.0",
+  "description": "定时触发随机配对",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

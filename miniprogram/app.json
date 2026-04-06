@@ -13,6 +13,7 @@
     "pages/check/check",
     "pages/respond/respond",
     "pages/partner/partner",
+    "pages/admin-review/admin-review",
     "pages/agreement/agreement", 
     "pages/privacy/privacy"
   ],

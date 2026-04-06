@@ -25,7 +25,9 @@ exports.main = async (event, context) => {
     const targetUserResult = await db.collection('ActiveUser')
       .where({
         'numericId': searchId,
-        'profile.completed': true
+        'profile.completed': true,
+        // 仅显式隐藏账号对普通用户不可见
+        'visibility.hiddenFromUsers': _.neq(true)
       })
       .get();
     
@@ -37,6 +39,13 @@ exports.main = async (event, context) => {
     }
     
     const targetUser = targetUserResult.data[0];
+
+    if (targetUser.visibility && targetUser.visibility.hiddenFromUsers) {
+      return {
+        success: false,
+        message: '未找到该用户'
+      };
+    }
     
     // 检查隐私设置
     if (!targetUser.privacy.allowSearch) {

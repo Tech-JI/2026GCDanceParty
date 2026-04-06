@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "openapi": []
+  },
+  "triggers": [
+    {
+      "name": "daily-random-match",
+      "type": "timer",
+      "config": "0 * * * * * *"
+    }
+  ]
+}

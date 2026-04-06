@@ -4,6 +4,7 @@ cloud.init({
 })
 // 云函数入口函数
 const db = cloud.database()
+const _ = db.command
 // 云函数访问数据库上限为100
 const MAX_LIMIT = 100
 exports.main = async (event, context) => {
@@ -28,6 +29,9 @@ exports.main = async (event, context) => {
       image: true,
       numericId: true,
       partner: true
+    }).where({
+      // 仅显式隐藏账号不出现在列表中
+      'visibility.hiddenFromUsers': _.neq(true)
     }).skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
     tasks.push(promise)
   }

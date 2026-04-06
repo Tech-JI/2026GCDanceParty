@@ -31,6 +31,13 @@ exports.main = async (event, context) => {
     }
 
     const currentUser = currentUserResult.data;
+
+    if (currentUser.visibility && currentUser.visibility.hiddenFromUsers) {
+      return {
+        success: false,
+        message: '当前账号不可发起邀请'
+      };
+    }
     
     if (currentUser.wxOpenid && currentUser.wxOpenid !== wxContext.OPENID) {
       return {
@@ -82,6 +89,13 @@ exports.main = async (event, context) => {
     }
     
     const targetUser = targetUserResult.data[0];
+
+    if (targetUser.visibility && targetUser.visibility.hiddenFromUsers) {
+      return {
+        success: false,
+        message: '目标用户不存在'
+      };
+    }
     
     // 验证目标用户状态
     if (!targetUser.partner || typeof targetUser.partner !== 'object') {

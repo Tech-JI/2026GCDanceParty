@@ -14,6 +14,7 @@ Page({
     partnerDisplayName: '',
     partnerDisplayNumericId: '',
     done: false,
+    isAdmin: false,
     allowRandomMatch: false,
     invitation: {},
     accept: {},
@@ -135,6 +136,7 @@ Page({
         done: true,
         dataobj: userData,
         openid: userData._openid || '',
+        isAdmin: !!(userData.isAdmin || userData.role === 'admin'),
         hasPartner,
         allowRandomMatch: !!partnerInfo.allowRandomMatch,
         partnerDisplayName: partnerInfo.partnerName || '',
@@ -194,6 +196,14 @@ Page({
     }).then(() => {
       wx.showToast({ title: val ? '随机匹配已开启' : '随机匹配已关闭', icon: 'none' });
     });
+  },
+
+  goAdminReview() {
+    if (!this.data.isAdmin) {
+      wx.showToast({ title: '无管理员权限', icon: 'none' });
+      return;
+    }
+    wx.navigateTo({ url: '/pages/admin-review/admin-review' });
   },
 
   //前往邀请函页面

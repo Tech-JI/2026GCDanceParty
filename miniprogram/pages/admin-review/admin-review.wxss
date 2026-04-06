@@ -1,0 +1,58 @@
+.container {
+  padding: 32rpx;
+}
+
+.title {
+  font-size: 38rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.desc {
+  color: #666;
+  font-size: 28rpx;
+  line-height: 1.6;
+  margin-bottom: 30rpx;
+}
+
+.save-btn {
+  background-color: #78161E !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 18rpx 0;
+  padding: 18rpx 20rpx;
+  border: 1rpx solid #e5e5e5;
+  border-radius: 12rpx;
+  background: #fff;
+}
+
+.label {
+  font-size: 30rpx;
+  color: #333;
+}
+
+.time-value {
+  min-width: 180rpx;
+  text-align: center;
+  padding: 10rpx 18rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  font-size: 30rpx;
+  color: #222;
+}
+
+.result {
+  margin-top: 30rpx;
+  padding: 20rpx;
+  border: 1rpx solid #ddd;
+  border-radius: 12rpx;
+  background: #fafafa;
+  font-size: 28rpx;
+  line-height: 1.8;
+}
