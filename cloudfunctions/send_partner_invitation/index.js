@@ -46,7 +46,13 @@ exports.main = async (event, context) => {
         message: '当前用户舞伴信息异常，请重新登录'
       };
     }
-
+    const currentReg = currentUser.registration || {};
+    if (!currentReg.registered) {
+      return {
+        success: false,
+        message: '您的报名尚未激活，请先完成支付并等待核销后，再发送邀请'
+      };
+    }
     if (currentUser.partner.hasPartner) {
       return {
         success: false,
@@ -84,7 +90,13 @@ exports.main = async (event, context) => {
         message: '目标用户资料不完整，暂时无法邀请'
       };
     }
-
+    const targetReg = targetUser.registration || {};
+    if (!targetReg.registered) {
+      return {
+        success: false,
+        message: '对方尚未完成报名激活，暂不可邀请'
+      };
+    }
     if (targetUser.partner.hasPartner) {
       return {
         success: false,

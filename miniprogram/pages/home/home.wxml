@@ -16,7 +16,7 @@
   <image class="background-image" src="{{backgroundImageUrl}}" mode="aspectFill"></image>
   <view class="page-container">
     <view class="search_input" style="position: fixed; width:735rpx">
-      <navigator url="../../pages/search/search" open-type="navigate">{{text.search}}</navigator>
+      <navigator url="/pages/search/search" open-type="switchTab">{{text.search}}</navigator>
       <view class="tabs_title">
         <block wx:for="{{tabs}}" wx:key="index">
           <Tabs tabs="{{tabs}}" binditemChange="handleItemChange" class="test"></Tabs>

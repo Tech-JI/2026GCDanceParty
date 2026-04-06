@@ -55,8 +55,7 @@
         
         <button 
           class="payment-btn" 
-          bindtap="onShowPaymentQR"
-        >
+          bindtap="onShowPaymentQR">
           扫码报名
         </button>
       </view>
@@ -84,6 +83,8 @@
         <image class="status-icon success" src="/icons/home.png" mode="aspectFit" />
         <text class="status-text">已报名成功</text>
         <text class="status-desc">恭喜！您可以使用所有功能</text>
+        <image class="wechat_group" src="/icons/wechatgroup.jpg" mode="aspectFit" />
+        <text class="wechatnotice">请扫码加入微信群</text>
       </view>
       
       <button 
@@ -141,7 +142,7 @@
       <button class="cancel-btn" bindtap="onClosePaymentModal">
         取消
       </button>
-      <button class="submit-btn" bindtap="onSubmitPayment">
+      <button class="submit-btn" bindtap="onClosePaymentModal">
         已报名 等待激活
       </button>
     </view>

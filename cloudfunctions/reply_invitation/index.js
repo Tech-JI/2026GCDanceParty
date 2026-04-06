@@ -138,7 +138,13 @@ exports.main = async (event, context) => {
         message: '您已经有舞伴了，无法接受邀请'
       };
     }
-    
+    const currentReg = currentUser.registration || {};
+    if (currentReg.paymentStatus !== 'paid' && action === 'accept') {
+      return {
+        success: false,
+        message: '您的报名尚未激活，请先完成支付并等待核销后，再接受邀请'
+      };
+    }
     // 获取邀请发送者信息
     if (!invitation.senderAccountUserId) {
       return {
@@ -156,7 +162,13 @@ exports.main = async (event, context) => {
         message: '邀请发送者不存在'
       };
     }
-    
+    const senderReg = sender.registration || {};
+    if (senderReg.paymentStatus !== 'paid' && action === 'accept') {
+      return {
+        success: false,
+        message: '对方的报名状态已失效或已退费，无法完成配对'
+      };
+    }
     // 检查发送者状态（兼容旧版字符串格式，自动修复）
     if (!sender.partner || typeof sender.partner !== 'object') {
       await db.collection('ActiveUser').doc(sender._id).update({ data: { partner: emptyPartner } });
