@@ -38,6 +38,13 @@ async function resolveAdminSettingsDoc() {
   return { docId: ADMIN_SETTINGS_DOC_IDS[0], data: {} };
 }
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]; // 交换位置
+  }
+  return array;
+}
 function isAdminUser(userDoc, adminOpenIds, openid) {
   if (Array.isArray(adminOpenIds) && adminOpenIds.includes(openid)) return true;
   if (!userDoc) return false;
@@ -192,7 +199,8 @@ exports.main = async (event, context) => {
         'partner.allowRandomMatch': true,
         'profile.completed': true,
         // 仅显式隐藏账号不参与随机匹配
-        'visibility.hiddenFromUsers': _.neq(true)
+        'visibility.hiddenFromUsers': _.neq(true),
+        'registration.paymentStatus': 'paid'
       })
       .get();
 
@@ -228,7 +236,8 @@ exports.main = async (event, context) => {
       };
     }
     
-    const singleUsers = singleUsersResult.data;
+    let singleUsers = singleUsersResult.data; 
+    singleUsers = shuffleArray(singleUsers);
     const matches = [];
     const processed = new Set();
     
