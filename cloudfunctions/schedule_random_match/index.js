@@ -5,39 +5,97 @@ cloud.init({
 });
 
 const db = cloud.database();
-const ADMIN_SETTINGS_DOC_ID = '2d12bec269d35e3d032bf9d31885d8f8';
+const ADMIN_SETTINGS_DOC_IDS = ['admin_settings', '2d12bec269d35e3d032bf9d31885d8f8'];
+
+function parseScheduleInt(value, fallback) {
+  const num = Number(value);
+  return Number.isInteger(num) ? num : fallback;
+}
+
+function getScheduleConfig(matching = {}) {
+  const enabled = typeof matching.scheduleEnabled === 'boolean'
+    ? matching.scheduleEnabled
+    : !!matching.randomMatchEnabled;
+
+  return {
+    enabled,
+    hour: parseScheduleInt(matching.scheduleHour, 21),
+    minute: parseScheduleInt(matching.scheduleMinute, 0),
+    timezone: (matching.timezone || 'Asia/Shanghai').toString()
+  };
+}
+
+async function resolveAdminSettingsDoc() {
+  for (const docId of ADMIN_SETTINGS_DOC_IDS) {
+    const res = await db.collection('AdminSettings').doc(docId).get().catch(() => ({ data: null }));
+    if (res && res.data) {
+      return { docId, data: res.data };
+    }
+  }
+
+  return { docId: ADMIN_SETTINGS_DOC_IDS[0], data: {} };
+}
+
+function getTimePartsInTimezone(timezone) {
+  const formatter = new Intl.DateTimeFormat('en-GB', {
+    timeZone: timezone,
+    hour12: false,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  const parts = formatter.formatToParts(new Date());
+  const map = parts.reduce((acc, part) => {
+    acc[part.type] = part.value;
+    return acc;
+  }, {});
+
+  return {
+    year: Number(map.year),
+    month: Number(map.month),
+    day: Number(map.day),
+    hour: Number(map.hour),
+    minute: Number(map.minute)
+  };
+}
 
 exports.main = async () => {
   try {
-    const adminSettingsRes = await db.collection('AdminSettings').doc(ADMIN_SETTINGS_DOC_ID).get().catch(() => ({ data: null }));
-    const adminSettings = (adminSettingsRes && adminSettingsRes.data) ? adminSettingsRes.data : {};
+    const { docId: adminSettingsDocId, data: adminSettings } = await resolveAdminSettingsDoc();
     const matching = adminSettings.matching || {};
+    const scheduleConfig = getScheduleConfig(matching);
 
-    const enabled = !!matching.scheduleEnabled;
-    const targetHour = Number.isInteger(matching.scheduleHour) ? matching.scheduleHour : 21;
-    const targetMinute = Number.isInteger(matching.scheduleMinute) ? matching.scheduleMinute : 0;
-
-    if (!enabled) {
+    if (!scheduleConfig.enabled) {
       return {
         success: true,
         message: '已关闭自动匹配计划'
       };
     }
 
-    const now = new Date();
-    const nowHour = now.getHours();
-    const nowMinute = now.getMinutes();
-    if (nowHour !== targetHour || nowMinute !== targetMinute) {
+    let nowParts;
+    let timezoneUsed = scheduleConfig.timezone;
+    try {
+      nowParts = getTimePartsInTimezone(scheduleConfig.timezone);
+    } catch (e) {
+      timezoneUsed = 'Asia/Shanghai';
+      nowParts = getTimePartsInTimezone(timezoneUsed);
+    }
+
+    if (nowParts.hour !== scheduleConfig.hour || nowParts.minute !== scheduleConfig.minute) {
       return {
         success: true,
         message: '当前不在执行时间窗',
-        now: `${nowHour}:${nowMinute}`,
-        target: `${targetHour}:${targetMinute}`
+        now: `${nowParts.hour}:${nowParts.minute}`,
+        target: `${scheduleConfig.hour}:${scheduleConfig.minute}`,
+        timezone: timezoneUsed
       };
     }
 
     // 防止同一分钟重复执行
-    const currentMinuteKey = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}-${nowHour}-${nowMinute}`;
+    const currentMinuteKey = `${nowParts.year}-${nowParts.month}-${nowParts.day}-${nowParts.hour}-${nowParts.minute}`;
     if (matching.lastScheduleMinuteKey === currentMinuteKey) {
       return {
         success: true,
@@ -52,16 +110,28 @@ exports.main = async () => {
       }
     });
 
-    await db.collection('AdminSettings').doc(ADMIN_SETTINGS_DOC_ID).update({
+    await db.collection('AdminSettings').doc(adminSettingsDocId).update({
       data: {
         'matching.lastScheduleMinuteKey': currentMinuteKey,
         'matching.lastScheduleRunAt': new Date()
       }
-    }).catch(() => {});
+    }).catch(async () => {
+      await db.collection('AdminSettings').doc(adminSettingsDocId).set({
+        data: {
+          ...adminSettings,
+          matching: {
+            ...matching,
+            lastScheduleMinuteKey: currentMinuteKey,
+            lastScheduleRunAt: new Date()
+          }
+        }
+      });
+    });
 
     return {
       success: true,
       message: '定时触发执行完成',
+      timezone: timezoneUsed,
       result: res.result || {}
     };
   } catch (error) {

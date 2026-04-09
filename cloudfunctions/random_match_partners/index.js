@@ -7,7 +7,36 @@ cloud.init({
 
 const db = cloud.database()
 const _ = db.command
-const ADMIN_SETTINGS_DOC_ID = '2d12bec269d35e3d032bf9d31885d8f8'
+const ADMIN_SETTINGS_DOC_IDS = ['admin_settings', '2d12bec269d35e3d032bf9d31885d8f8']
+
+function parseScheduleInt(value, fallback) {
+  const num = Number(value);
+  return Number.isInteger(num) ? num : fallback;
+}
+
+function getScheduleConfig(matchingSetting = {}) {
+  const enabled = typeof matchingSetting.scheduleEnabled === 'boolean'
+    ? matchingSetting.scheduleEnabled
+    : !!matchingSetting.randomMatchEnabled;
+
+  return {
+    enabled,
+    hour: parseScheduleInt(matchingSetting.scheduleHour, 21),
+    minute: parseScheduleInt(matchingSetting.scheduleMinute, 0),
+    timezone: (matchingSetting.timezone || 'Asia/Shanghai').toString()
+  };
+}
+
+async function resolveAdminSettingsDoc() {
+  for (const docId of ADMIN_SETTINGS_DOC_IDS) {
+    const res = await db.collection('AdminSettings').doc(docId).get().catch(() => ({ data: null }));
+    if (res && res.data) {
+      return { docId, data: res.data };
+    }
+  }
+
+  return { docId: ADMIN_SETTINGS_DOC_IDS[0], data: {} };
+}
 
 function isAdminUser(userDoc, adminOpenIds, openid) {
   if (Array.isArray(adminOpenIds) && adminOpenIds.includes(openid)) return true;
@@ -54,10 +83,10 @@ exports.main = async (event, context) => {
     const isScheduleTrigger = triggerType === 'schedule';
 
     // 读取管理员配置与运行配置
-    const adminSettingsRes = await db.collection('AdminSettings').doc(ADMIN_SETTINGS_DOC_ID).get().catch(() => ({ data: null }));
-    const adminSettings = (adminSettingsRes && adminSettingsRes.data) ? adminSettingsRes.data : {};
+    const { docId: adminSettingsDocId, data: adminSettings } = await resolveAdminSettingsDoc();
     const adminOpenIds = Array.isArray(adminSettings.adminOpenIds) ? adminSettings.adminOpenIds : [];
     const matchingSetting = adminSettings.matching || {};
+    const scheduleConfig = getScheduleConfig(matchingSetting);
 
     // 仅管理员可读取/修改调度配置
     if (action === 'getSchedule') {
@@ -66,10 +95,10 @@ exports.main = async (event, context) => {
       return {
         success: true,
         data: {
-          enabled: !!matchingSetting.scheduleEnabled,
-          hour: Number.isInteger(matchingSetting.scheduleHour) ? matchingSetting.scheduleHour : 21,
-          minute: Number.isInteger(matchingSetting.scheduleMinute) ? matchingSetting.scheduleMinute : 0,
-          timezone: matchingSetting.timezone || 'Asia/Shanghai'
+          enabled: scheduleConfig.enabled,
+          hour: scheduleConfig.hour,
+          minute: scheduleConfig.minute,
+          timezone: scheduleConfig.timezone
         }
       };
     }
@@ -91,6 +120,7 @@ exports.main = async (event, context) => {
 
       const scheduleData = {
         'matching.scheduleEnabled': enabled,
+        'matching.randomMatchEnabled': enabled,
         'matching.scheduleHour': hour,
         'matching.scheduleMinute': minute,
         'matching.timezone': timezone,
@@ -98,13 +128,14 @@ exports.main = async (event, context) => {
         'matching.updatedBy': wxContext.OPENID
       };
 
-      await db.collection('AdminSettings').doc(ADMIN_SETTINGS_DOC_ID).update({ data: scheduleData }).catch(async () => {
-        await db.collection('AdminSettings').doc(ADMIN_SETTINGS_DOC_ID).set({
+      await db.collection('AdminSettings').doc(adminSettingsDocId).update({ data: scheduleData }).catch(async () => {
+        await db.collection('AdminSettings').doc(adminSettingsDocId).set({
           data: {
             adminOpenIds,
             matching: {
               ...matchingSetting,
               scheduleEnabled: enabled,
+              randomMatchEnabled: enabled,
               scheduleHour: hour,
               scheduleMinute: minute,
               timezone,
@@ -116,18 +147,19 @@ exports.main = async (event, context) => {
       });
 
       // 回读校验，确保配置已真实写入数据库
-      const verifyRes = await db.collection('AdminSettings').doc(ADMIN_SETTINGS_DOC_ID).get().catch(() => ({ data: null }));
+      const verifyRes = await db.collection('AdminSettings').doc(adminSettingsDocId).get().catch(() => ({ data: null }));
       const verifyData = (verifyRes && verifyRes.data) ? verifyRes.data : {};
       const savedMatching = verifyData.matching || {};
+      const savedSchedule = getScheduleConfig(savedMatching);
 
       return {
         success: true,
         message: '匹配计划已保存',
         data: {
-          enabled: !!savedMatching.scheduleEnabled,
-          hour: Number.isInteger(savedMatching.scheduleHour) ? savedMatching.scheduleHour : hour,
-          minute: Number.isInteger(savedMatching.scheduleMinute) ? savedMatching.scheduleMinute : minute,
-          timezone: savedMatching.timezone || timezone
+          enabled: savedSchedule.enabled,
+          hour: savedSchedule.hour,
+          minute: savedSchedule.minute,
+          timezone: savedSchedule.timezone
         },
         debug: {
           updatedBy: savedMatching.updatedBy || wxContext.OPENID
@@ -284,13 +316,27 @@ exports.main = async (event, context) => {
     }
     
     // 更新管理员设置中的最后匹配时间
-    await db.collection('AdminSettings').doc(ADMIN_SETTINGS_DOC_ID).update({
+    await db.collection('AdminSettings').doc(adminSettingsDocId).update({
       data: {
         'matching.lastMatchTime': new Date(),
         'matching.lastMatchCount': matches.length,
         'matching.lastRunId': runId,
         'matching.lastTriggerType': triggerType
       }
+    }).catch(async () => {
+      await db.collection('AdminSettings').doc(adminSettingsDocId).set({
+        data: {
+          ...adminSettings,
+          adminOpenIds,
+          matching: {
+            ...matchingSetting,
+            lastMatchTime: new Date(),
+            lastMatchCount: matches.length,
+            lastRunId: runId,
+            lastTriggerType: triggerType
+          }
+        }
+      });
     });
 
     await db.collection('MatchTaskLog').add({

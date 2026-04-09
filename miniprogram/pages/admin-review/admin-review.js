@@ -1,6 +1,7 @@
 Page({
   data: {
     saving: false,
+    triggering: false,
     scheduleEnabled: false,
     timeValue: '21:00',
     lastMessage: ''
@@ -76,6 +77,39 @@ Page({
       wx.showToast({ title: '保存失败', icon: 'none' });
     } finally {
       this.setData({ saving: false });
+    }
+  },
+
+  async triggerMatchNow() {
+    if (this.data.triggering) return;
+    this.setData({ triggering: true });
+
+    try {
+      const res = await wx.cloud.callFunction({
+        name: 'random_match_partners',
+        data: {
+          triggerType: 'manual'
+        }
+      });
+
+      const result = res && res.result ? res.result : {};
+      const ok = !!result.success;
+      const baseMessage = result.message || result.error || (ok ? '已触发随机匹配' : '触发失败');
+      const countText = typeof result.matchCount === 'number' ? `，配对 ${result.matchCount} 对` : '';
+      const runIdText = result.runId ? `，任务号 ${result.runId}` : '';
+      const finalMessage = `${baseMessage}${countText}${runIdText}`;
+
+      this.setData({ lastMessage: finalMessage });
+      wx.showToast({
+        title: ok ? '执行完成' : '执行失败',
+        icon: 'none'
+      });
+    } catch (e) {
+      const errText = (e && (e.errMsg || e.message)) ? (e.errMsg || e.message) : '触发失败';
+      this.setData({ lastMessage: errText });
+      wx.showToast({ title: '触发失败', icon: 'none' });
+    } finally {
+      this.setData({ triggering: false });
     }
   }
 });

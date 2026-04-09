@@ -21,6 +21,13 @@
   border: none !important;
 }
 
+.trigger-btn {
+  margin-top: 18rpx;
+  background: #fff;
+  color: #78161E;
+  border: 1rpx solid #78161E;
+}
+
 .setting-row {
   display: flex;
   align-items: center;

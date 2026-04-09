@@ -18,6 +18,10 @@
     {{saving ? '保存中...' : '保存计划'}}
   </button>
 
+  <button class="trigger-btn" bindtap="triggerMatchNow" loading="{{triggering}}" disabled="{{triggering || saving}}">
+    {{triggering ? '执行中...' : '触发随机匹配'}}
+  </button>
+
   <view class="result" wx:if="{{lastMessage}}">
     <view>{{lastMessage}}</view>
   </view>
